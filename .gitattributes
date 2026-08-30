@@ -1,15 +1,9 @@
-# Un-vendor all custom C++ files in subdirectories
-**/*.cpp linguist-vendored=false
-**/*.h linguist-vendored=false
-*.cpp linguist-vendored=false
-*.h linguist-vendored=false
+# Exclude only the massive 900KB single-header library from stats
+**/json.hpp linguist-vendored
 
-# Exclude only the third-party json.hpp library header
-**/json.hpp linguist-vendored=true
-
-# Explicitly detect all 4 languages everywhere
-**/*.cpp linguist-language=C++ linguist-detectable=true
-**/*.h linguist-language=C++ linguist-detectable=true
-**/*.js linguist-language=JavaScript linguist-detectable=true
-**/*.css linguist-language=CSS linguist-detectable=true
-**/*.html linguist-language=HTML linguist-detectable=true
+# Ensure all languages (C++, JavaScript, CSS, HTML) appear in statistics
+*.cpp linguist-detectable=true
+*.h linguist-detectable=true
+*.js linguist-detectable=true
+*.css linguist-detectable=true
+*.html linguist-detectable=true
