@@ -32,4 +32,3 @@
   - [x] Review prerequisite concepts.
   - [x] Configure development environment.
   - [x] Initialize tracking repository.
-- **Next Up:** Track 1 — Modern JavaScript (ES6+), TypeScript setup, and the Task Manager project.
