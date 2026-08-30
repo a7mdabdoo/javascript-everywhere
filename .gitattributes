@@ -1,9 +1,9 @@
-# Ignore all C++ source and header files from repo language statistics
-*.cpp linguist-vendored
-*.hpp linguist-vendored
-*.h linguist-vendored
+# Ignore only the external third-party library to balance the stats
+**/json.hpp linguist-vendored
 
-# Ensure Web languages are tracked in statistics
+# Ensure all 4 languages (C++, JavaScript, CSS, HTML) appear in statistics
+*.cpp linguist-detectable=true
+*.h linguist-detectable=true
 *.js linguist-detectable=true
-*.html linguist-detectable=true
 *.css linguist-detectable=true
+*.html linguist-detectable=true
