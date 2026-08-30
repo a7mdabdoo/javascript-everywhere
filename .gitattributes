@@ -1,9 +1,15 @@
-# Exclude only the massive single-header library json.hpp from stats
+# Un-vendor all custom C++ files in subdirectories
+**/*.cpp linguist-vendored=false
+**/*.h linguist-vendored=false
+*.cpp linguist-vendored=false
+*.h linguist-vendored=false
+
+# Exclude only the third-party json.hpp library header
 **/json.hpp linguist-vendored=true
 
-# Explicitly categorize and detect all 4 languages in repository statistics
-*.cpp linguist-language=C++ linguist-detectable=true
-*.h linguist-language=C++ linguist-detectable=true
-*.js linguist-language=JavaScript linguist-detectable=true
-*.css linguist-language=CSS linguist-detectable=true
-*.html linguist-language=HTML linguist-detectable=true
+# Explicitly detect all 4 languages everywhere
+**/*.cpp linguist-language=C++ linguist-detectable=true
+**/*.h linguist-language=C++ linguist-detectable=true
+**/*.js linguist-language=JavaScript linguist-detectable=true
+**/*.css linguist-language=CSS linguist-detectable=true
+**/*.html linguist-language=HTML linguist-detectable=true
