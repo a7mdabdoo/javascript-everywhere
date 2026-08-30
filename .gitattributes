@@ -1,0 +1,8 @@
+# Mark large external C++ library files as vendored (ignored in language stats)
+**/json.hpp linguist-vendored
+day-00/project cpp/** linguist-vendored
+
+# Ensure Web languages are detected in language statistics
+*.html linguist-detectable=true
+*.css linguist-detectable=true
+*.js linguist-detectable=true
