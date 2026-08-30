@@ -1,0 +1,197 @@
+/* Color Variables */
+:root {
+    --bg-page: #ffffff;
+    --text-main: #333333;
+    --bg-header: #ffffff;
+    --bg-column: #f3f4f6;
+    --bg-card: #ffffff;
+    --border-inp: #e5e7eb;
+    --purple-btn: #8b5cf6;
+    --dark-btn-bg: #4b5563;
+    --shadow: rgba(0, 0, 0, 0.08);
+    --col-text: #6b7280;
+}
+
+/* Dark Mode Colors */
+body.dark {
+    --bg-page: #111827;
+    --text-main: #f9fafb;
+    --bg-header: #1f2937;
+    --bg-column: #374151;
+    --bg-card: #1f2937;
+    --border-inp: #4b5563;
+    --dark-btn-bg: #374151;
+    --shadow: rgba(0, 0, 0, 0.4);
+    --col-text: #9ca3af;
+}
+
+/* Default Style */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Body Style */
+body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Header */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: var(--bg-header);
+    border-bottom: 1px solid var(--border-inp);
+}
+
+/* Logo Gradient  */
+.logo {
+    font-size: 26px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #8b5cf6, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Controls Wrapper */
+.controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Dark Mode Button */
+#darkModeBtn {
+    background-color: var(--dark-btn-bg);
+    color: #ffffff;
+    border-radius: 6px;
+}
+
+/* Task Input */
+input[type="text"] {
+    padding: 10px 15px;
+    border-radius: 6px;
+    width: 260px;
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border-inp);
+    outline: none;
+}
+
+/* The Buttons */
+button {
+    padding: 9px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+/* Add Task Button */
+.primary-btn {
+    background-color: var(--purple-btn);
+    color: white;
+}
+
+/* Main Board */
+.board {
+    display: flex;
+    gap: 25px;
+    padding: 40px;
+    /* align-items: flex-start; */
+}
+
+/* Board Columns */
+.column {
+    background-color: var(--bg-column);
+    border-radius: 8px;
+    width: 33.33%;
+    padding: 15px;
+    min-height: 300px;
+}
+
+/* Column Header */
+.col-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Column Title */
+.col-header h3 {
+    font-size: 13px;
+    color: var(--col-text);
+}
+
+/* Task Count */
+.count {
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--col-text);
+}
+
+/* Tasks Wrapper */
+.tasks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Individual Task Card */
+.task-card {
+    background-color: var(--bg-card);
+    padding: 16px;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid var(--purple-btn);
+}
+
+/* Task Text Content */
+.task-text {
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    flex-grow: 1;
+}
+
+/* Action Icons Container */
+.arrows {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Action Icons Styling */
+.arrows button {
+    background: none;
+    padding: 0;
+    font-size: 16px;
+    opacity: 0.7;
+    transition: 0.2s;
+}
+.del-btn {
+    background-color: transparent;
+    border: none;
+    color: red;
+    cursor: pointer;
+    margin-right: 8px;
+}
+/* Action Icons Hover State */
+.arrows button:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}

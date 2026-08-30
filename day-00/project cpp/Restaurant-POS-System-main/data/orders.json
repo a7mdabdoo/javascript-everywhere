@@ -1,0 +1,16 @@
+{
+    "items": [
+        {
+            "name": "Pizza",
+            "price": 80.0,
+            "quantity": 19,
+            "itemTotal": 1520.0
+        }
+    ],
+    "orderId": 7359,
+    "date": "Sat Jul 18 23:49:46 2026\n",
+    "itemsCount": 1,
+    "total": 1520.0,
+    "discount": 152.0,
+    "finalTotal": 1368.0
+}

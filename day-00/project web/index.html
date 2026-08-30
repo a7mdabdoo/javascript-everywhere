@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <header class="top-bar">
+        <h1 class="logo">TaskFlow</h1>
+        
+        <div class="controls">
+            <button id="darkModeBtn">Dark Mode</button>
+            <input type="text" id="taskInput" placeholder="What needs to be done?">
+            <button id="addBtn" class="primary-btn">Add Task</button>
+        </div>
+    </header>
+
+    <main class="board">
+        
+        <div class="column">
+            <div class="col-header">
+                <h3>TO DO</h3>
+                <span class="count" id="count-todo">0</span>
+            </div>
+            <div class="tasks-container" id="col-todo"></div>
+        </div>
+
+        <div class="column">
+            <div class="col-header">
+                <h3>IN PROGRESS</h3>
+                <span class="count" id="count-inprogress">0</span>
+            </div>
+            <div class="tasks-container" id="col-inprogress"></div>
+        </div>
+
+        <div class="column">
+            <div class="col-header">
+                <h3>DONE</h3>
+                <span class="count" id="count-done">0</span>
+            </div>
+            <div class="tasks-container" id="col-done"></div>
+        </div>
+
+    </main>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
