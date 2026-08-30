@@ -1,8 +1,9 @@
-# Ignore C++ project files and external libraries from language statistics
-"day-00/project cpp/**" linguist-vendored
-**/json.hpp linguist-vendored
+# Ignore all C++ source and header files from repo language statistics
+*.cpp linguist-vendored
+*.hpp linguist-vendored
+*.h linguist-vendored
 
-# Ensure HTML, CSS, and JS are actively tracked in repository stats
+# Ensure Web languages are tracked in statistics
+*.js linguist-detectable=true
 *.html linguist-detectable=true
 *.css linguist-detectable=true
-*.js linguist-detectable=true
