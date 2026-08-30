@@ -1,9 +1,9 @@
-# Ignore only the external third-party library to balance the stats
-**/json.hpp linguist-vendored
+# Exclude only the massive single-header library json.hpp from stats
+**/json.hpp linguist-vendored=true
 
-# Ensure all 4 languages (C++, JavaScript, CSS, HTML) appear in statistics
-*.cpp linguist-detectable=true
-*.h linguist-detectable=true
-*.js linguist-detectable=true
-*.css linguist-detectable=true
-*.html linguist-detectable=true
+# Explicitly categorize and detect all 4 languages in repository statistics
+*.cpp linguist-language=C++ linguist-detectable=true
+*.h linguist-language=C++ linguist-detectable=true
+*.js linguist-language=JavaScript linguist-detectable=true
+*.css linguist-language=CSS linguist-detectable=true
+*.html linguist-language=HTML linguist-detectable=true
