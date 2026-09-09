@@ -25,7 +25,6 @@ Personal tracking repository for the **JavaScript Everywhere** learning path (26
 |:---:|---|---|:---:|
 | **Day 00** | [Introduction & Baseline Projects](day-00/notes.md) | Environment setup, baseline C++ & Web projects, Git portfolio | Complete |
 | **Day 01** | [Dev Environment Setup](day-01/NOTES.md) | Node runtime, browser DOM, npm, Git workflow, JS preview | Complete |
-| **Day 02** | JS Fundamentals | Variables, data types, conditionals, loops | Upcoming |
 
 ---
 
