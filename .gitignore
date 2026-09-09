@@ -19,6 +19,4 @@ LINKEDIN_POST*.txt
 npm-debug.log*
 
 # IDE settings
-.vscode/*
-!.vscode/settings.json
-!.vscode/extensions.json
+.vscode/
