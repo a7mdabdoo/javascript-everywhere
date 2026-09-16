@@ -67,5 +67,6 @@ javascript-everywhere/
     ├── report.js
     ├── index.html
     ├── app.js
-    └── bonus.js
+    ├── bonus.js
+    └── img/
 ```
