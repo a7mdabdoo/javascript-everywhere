@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 04 - Student Dashboard</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 30px;
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+        input {
+            padding: 8px;
+            font-size: 14px;
+            margin: 4px;
+        }
+        button {
+            padding: 8px 14px;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 4px;
+        }
+        .section-box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 18px;
+            border-radius: 4px;
+        }
+        #message, #server-status {
+            font-weight: bold;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+        .error {
+            color: #d9534f;
+        }
+        .ok {
+            color: #28a745;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 500px;
+            margin: 15px auto;
+            text-align: left;
+        }
+        li {
+            padding: 8px 12px;
+            background-color: #f2f2f2;
+            margin-bottom: 6px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #summary {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student Dashboard</h1>
+
+    <!-- Part 1: Add Student -->
+    <div class="section-box">
+        <h3>Add Student</h3>
+        <div>
+            <input type="text" id="nameInput" placeholder="Student name" />
+            <input type="text" id="scoreInput" placeholder="Score (0-100)" />
+            <input type="text" id="cityInput" placeholder="City (optional)" />
+        </div>
+        <div>
+            <button id="addBtn">Add</button>
+            <button id="undoBtn" disabled>Undo</button>
+            <button id="clearBtn">Clear</button>
+        </div>
+        <p id="message"></p>
+    </div>
+
+    <!-- Part 2: Server Load & Freeze vs Chunked -->
+    <div class="section-box">
+        <h3>Async & Event Loop Controls</h3>
+        <div>
+            <button id="loadServerBtn">Load from server</button>
+            <button id="forceErrorBtn">Test Server Error</button>
+            <button id="freezeBtn">Freeze (3s)</button>
+            <button id="chunkedBtn">Chunked (3s)</button>
+        </div>
+        <p id="server-status">Ready</p>
+    </div>
+
+    <!-- Students List -->
+    <div>
+        <h3>Students List:</h3>
+        <input type="text" id="searchInput" placeholder="Search student..." />
+        <p id="summary">Count: 0 | Average: 0.0</p>
+        <ul id="studentList"></ul>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

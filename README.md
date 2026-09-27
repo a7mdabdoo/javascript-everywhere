@@ -27,6 +27,7 @@ Personal tracking repository for the **JavaScript Everywhere** learning path (26
 | **Day 01** | [Dev Environment Setup](day-01/NOTES.md) | Node runtime, browser DOM, npm, Git workflow, JS preview | Complete |
 | **Day 02** | [JS Fundamentals](day-02/NOTES.md) | Variables, data types, conditionals, loops | Complete |
 | **Day 03** | [Functions & Scope](day-03/NOTES.md) | Functions, scope, hoisting, closures, pure grade library | Complete |
+| **Day 04** | [ES6+ & Async JS](day-04/NOTES.md) | Destructuring, spread/rest, timers, error-first callbacks, Event Loop | Complete |
 
 ---
 
@@ -56,14 +57,33 @@ javascript-everywhere/
 │   ├── report-card.js
 │   ├── index.html
 │   └── app.js
-└── day-03/
+├── day-03/
+│   ├── NOTES.md
+│   ├── predictions.md
+│   ├── predictions.js
+│   ├── basics.js
+│   ├── scope.js
+│   ├── closures.js
+│   ├── grade-lib.js
+│   ├── report.js
+│   ├── index.html
+│   ├── app.js
+│   ├── bonus.js
+│   └── img/
+└── day-04/
     ├── NOTES.md
     ├── predictions.md
     ├── predictions.js
-    ├── basics.js
-    ├── scope.js
-    ├── closures.js
+    ├── destructuring.js
+    ├── spread.js
+    ├── messy.js
+    ├── timers.js
+    ├── callbacks.js
+    ├── fake-db.js
+    ├── hell.js
+    ├── flat.js
     ├── grade-lib.js
+    ├── students.json
     ├── report.js
     ├── index.html
     ├── app.js
