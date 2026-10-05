@@ -1,0 +1,8 @@
+[
+  { "id": 101, "name": "Ahmed", "score": 95, "attendance": 98 },
+  { "id": 102, "name": "Mohamed", "score": 88, "attendance": 90 },
+  { "id": 103, "name": "Abdo", "score": 74, "attendance": 85 },
+  { "id": 104, "name": "Saeed", "score": 92, "attendance": 94 },
+  { "id": 105, "name": "Ayman", "score": 81, "attendance": 89 },
+  { "id": 106, "name": "Abdelkarim", "score": 90, "attendance": 92 }
+]
