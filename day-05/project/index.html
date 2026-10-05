@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 05 — Academic Portal (One Module, Two Runtimes)</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --warning: #ca8a04;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 2rem; max-width: 900px; margin: 0 auto; }
+    header { margin-bottom: 2rem; border-bottom: 2px solid var(--border); padding-bottom: 1rem; }
+    h1 { font-size: 1.6rem; color: var(--text); }
+    p.subtitle { color: var(--muted); font-size: 0.95rem; margin-top: 0.3rem; }
+    
+    .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .controls { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+    
+    button { background: var(--primary); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+    button:hover:not(:disabled) { background: var(--primary-hover); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    button.secondary { background: #475569; }
+    button.secondary:hover:not(:disabled) { background: #334155; }
+    
+    label.checkbox-label { display: flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; cursor: pointer; user-select: none; }
+    
+    #status { font-weight: 500; margin-top: 0.75rem; font-size: 0.95rem; }
+    #timingOutput { font-family: monospace; font-size: 0.9rem; background: #f1f5f9; padding: 0.5rem; border-radius: 4px; margin-top: 0.5rem; white-space: pre-wrap; display: none; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.95rem; }
+    th, td { text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); }
+    th { background: #f8fafc; font-weight: 600; color: var(--muted); }
+    tr:hover td { background: #f8fafc; }
+    
+    .badge { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+    .badge-pass { background: #dcfce7; color: var(--success); }
+    .badge-fail { background: #fee2e2; color: var(--danger); }
+    .badge-risk { background: #fef9c3; color: var(--warning); }
+    .badge-ok { background: #e0f2fe; color: #0284c7; }
+
+    .summary-bar { display: flex; justify-content: space-between; font-weight: 600; padding: 0.75rem; background: #f1f5f9; border-radius: 6px; margin-top: 1rem; }
+
+    form.add-form { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 0.75rem; align-items: end; margin-top: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+    .form-group label { font-size: 0.85rem; color: var(--muted); font-weight: 500; }
+    input[type="text"], input[type="number"] { padding: 0.5rem 0.75rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; }
+    input:focus { outline: 2px solid var(--primary); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Academic Portal — Student Roster</h1>
+    <p class="subtitle">Day 05 Lab: ES Modules running natively in Node.js and Browser (Same <code>lib/</code> code everywhere)</p>
+  </header>
+
+  <div class="panel">
+    <div class="controls">
+      <button id="btnLoad">Load Students</button>
+      <button id="btnTimeBoth" class="secondary">Time Both (Seq vs Par)</button>
+      <label class="checkbox-label">
+        <input type="checkbox" id="chkSlowNetwork" />
+        Simulate Slow Network (>2s timeout)
+      </label>
+    </div>
+    <div id="status">Click "Load Students" to fetch records and parallel attendance.</div>
+    <div id="timingOutput"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Student Records</h2>
+    <table id="studentsTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Score</th>
+          <th>Grade</th>
+          <th>Attendance</th>
+          <th>Status</th>
+          <th>Risk</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr>
+          <td colspan="7" style="text-align: center; color: var(--muted); padding: 1.5rem;">No data loaded yet.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="summary-bar" id="summaryBar">
+      <span>Total: 0</span>
+      <span>Average Score: —</span>
+      <span>Attendance Failures: 0</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Add Student</h3>
+    <form id="addStudentForm" class="add-form">
+      <div class="form-group">
+        <label for="inputName">Student Name</label>
+        <input type="text" id="inputName" placeholder="e.g. Mahmoud" required />
+      </div>
+      <div class="form-group">
+        <label for="inputScore">Score (0-100)</label>
+        <input type="number" id="inputScore" min="0" max="100" placeholder="85" required />
+      </div>
+      <div class="form-group">
+        <label for="inputAttendance">Attendance %</label>
+        <input type="number" id="inputAttendance" min="0" max="100" placeholder="90" />
+      </div>
+      <button type="submit">Add Student</button>
+    </form>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

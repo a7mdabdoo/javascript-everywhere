@@ -1,0 +1,12 @@
+{
+  "name": "day-05-project",
+  "version": "1.0.0",
+  "description": "Day 05 Modular Async Grade Report for Node and Browser",
+  "type": "module",
+  "scripts": {
+    "report": "node report.js"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.10"
+  }
+}
