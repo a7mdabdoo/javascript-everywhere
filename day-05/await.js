@@ -1,6 +1,5 @@
-// Day 05 — Task 5: async / await Lab (await.js)
+// Task 5: async / await lab
 
-// Pasting promise-db.js implementation directly as instructed:
 const STUDENTS = {
   101: { id: 101, name: "Ahmed", city: "Qena", courseId: "CS-201" },
   102: { id: 102, name: "Mohamed", city: "Cairo", courseId: "AI-305" },
@@ -48,10 +47,7 @@ const getCourse = (id) => lookup(COURSES, id, "COURSES", 30);
 const getInstructor = (id) => lookup(INSTRUCTORS, id, "INSTRUCTORS", 30);
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// ============================================================================
-// 5.1 — Rewrite buildReport with async / await (No .then anywhere!)
-// Every intermediate value is a plain `const` - no shared `let`s.
-// ============================================================================
+// 5.1: rewrite buildReport with async / await
 async function buildReport(studentId) {
   const student = await getStudent(studentId);
   const scores = await getScores(student.id);
@@ -62,14 +58,12 @@ async function buildReport(studentId) {
   return `SUCCESS: ${student.name} (${student.city}) | Avg: ${avg} | Course: ${course.title} | Instructor: ${instructor.name} (${instructor.office})`;
 }
 
-// ============================================================================
-// 5.2 — Sequential vs Parallel
-// ============================================================================
+// 5.2: sequential vs parallel
 async function compareSequentialVsParallel() {
   console.log("\n=== Task 5.2: Sequential vs Parallel ===");
   const testIds = [101, 102, 105];
 
-  // 1. Sequential with for...of + await
+  // sequential with for..of
   const startSeq = Date.now();
   const seqResults = [];
   for (const id of testIds) {
@@ -77,62 +71,57 @@ async function compareSequentialVsParallel() {
     seqResults.push(s.name);
   }
   const seqDuration = Date.now() - startSeq;
-  console.log(`Sequential loading took: ${seqDuration}ms -> Names:`, seqResults);
+  console.log(`Sequential took: ${seqDuration}ms -> Names:`, seqResults);
 
-  // 2. Parallel with Promise.all + map
+  // parallel with Promise.all
   const startPar = Date.now();
   const parResults = (await Promise.all(testIds.map((id) => getStudent(id)))).map((s) => s.name);
   const parDuration = Date.now() - startPar;
-  console.log(`Parallel loading took:   ${parDuration}ms -> Names:`, parResults);
+  console.log(`Parallel took:   ${parDuration}ms -> Names:`, parResults);
 
   console.log(
-    `Timing explanation: Sequential adds every delay one after another (sum: 50+30+45 = ~125ms),\nwhile Parallel fires all three immediately, finishing in the time of the single slowest one (~50ms)!`
+    `Sequential takes sum of delays (~125ms), while parallel finishes in slowest time (~50ms).`
   );
 
-  // 3. Example where sequential is genuinely correct:
-  // Step 2 depends directly on the result of Step 1:
-  console.log("\nGenuinely dependent flow (Sequential is mandatory):");
-  const student = await getStudent(101); // We don't have courseId until student is fetched
-  const course = await getCourse(student.courseId); // Must wait for student.courseId!
-  console.log(`Enrolled Course for ${student.name}: ${course.title}`);
+  // example where sequential is needed
+  console.log("\nSequential needed when step 2 depends on step 1:");
+  const student = await getStudent(101);
+  const course = await getCourse(student.courseId);
+  console.log(`Course for ${student.name}: ${course.title}`);
 }
 
-// ============================================================================
-// 5.3 — The forEach Trap
-// ============================================================================
+// 5.3: forEach trap
 async function demonstrateForEachTrap() {
   console.log("\n=== Task 5.3: The forEach Trap ===");
   const testIds = [101, 102, 105];
 
-  console.log("--- 1. Broken forEach (done prints first!) ---");
+  console.log("--- 1. forEach (done prints first!) ---");
   testIds.forEach(async (id) => {
     const s = await getStudent(id);
-    console.log(`[forEach callback] Loaded: ${s.name}`);
+    console.log(`[forEach] loaded: ${s.name}`);
   });
-  console.log("[forEach] -> done (printed BEFORE student callbacks finished!)");
+  console.log("[forEach] -> done");
 
-  await delay(150); // wait for background promises to finish
+  await delay(150);
 
-  console.log("\n--- 2. Fixed with for...of loop ---");
+  console.log("\n--- 2. fixed with for...of ---");
   for (const id of testIds) {
     const s = await getStudent(id);
-    console.log(`[for...of] Loaded: ${s.name}`);
+    console.log(`[for...of] loaded: ${s.name}`);
   }
-  console.log("[for...of] -> done (guaranteed to print AFTER all items finish)");
+  console.log("[for...of] -> done");
 
-  console.log("\n--- 3. Fixed with Promise.all + map ---");
+  console.log("\n--- 3. fixed with Promise.all ---");
   await Promise.all(
     testIds.map(async (id) => {
       const s = await getStudent(id);
-      console.log(`[Promise.all map] Loaded: ${s.name}`);
+      console.log(`[Promise.all] loaded: ${s.name}`);
     })
   );
-  console.log("[Promise.all map] -> done (guaranteed to wait for all in parallel)");
+  console.log("[Promise.all] -> done");
 }
 
-// ============================================================================
-// 5.4 — return await
-// ============================================================================
+// 5.4: return await
 async function risky() {
   await delay(20);
   throw new Error("Critical database failure inside risky()");
@@ -140,17 +129,17 @@ async function risky() {
 
 async function returnWithoutAwait() {
   try {
-    return risky(); // Unawaited! Returns pending promise before rejection occurs.
+    return risky(); // not awaited, catch won't run locally
   } catch (err) {
-    console.log("[returnWithoutAwait] Caught locally:", err.message);
+    console.log("[returnWithoutAwait] caught:", err.message);
   }
 }
 
 async function returnWithAwait() {
   try {
-    return await risky(); // Awaited! Suspends function; rejection throws inside try block.
+    return await risky(); // awaited, caught by try/catch
   } catch (err) {
-    console.log("[returnWithAwait] Successfully caught inside try/catch:", err.message);
+    console.log("[returnWithAwait] caught inside try/catch:", err.message);
   }
 }
 
@@ -160,28 +149,18 @@ async function demonstrateReturnAwait() {
   try {
     await returnWithoutAwait();
   } catch (err) {
-    console.log("[Caller of returnWithoutAwait] Catch caught escaped error:", err.message);
+    console.log("[Caller] caught:", err.message);
   }
 
   await returnWithAwait();
-
-  /*
-   * One-sentence explanation:
-   * `return await promise` pauses execution inside the `try` block until the promise settles, allowing any rejection to be caught by the local `catch`, whereas `return promise` returns immediately and delegates rejection handling to the caller.
-   */
 }
 
-// ============================================================================
-// 5.1 Main function
-// ============================================================================
 async function main() {
   console.log("=== Task 5.1: async / await Rewrite ===");
 
-  // 1. Inspecting buildReport without await:
   const pendingPromise = buildReport(101);
   console.log("Calling buildReport(101) without await returns:", pendingPromise);
 
-  // 2. try / catch / finally reporting good id and bad id
   try {
     const goodReport = await pendingPromise;
     console.log("Good Report:", goodReport);
@@ -200,4 +179,4 @@ async function main() {
   await demonstrateReturnAwait();
 }
 
-main().catch((err) => console.error("Unhandled error in main:", err));
+main().catch((err) => console.error("Unhandled error:", err));

@@ -1,11 +1,10 @@
-// Day 05 — Task 3.3: chain.js (The Pyramid of Doom, Flattened!)
-// Pasting promise-db.js implementation directly as instructed.
+// Task 3.3: chain.js - flattening the 4-level pyramid into a promise chain
 
 const STUDENTS = {
   101: { id: 101, name: "Ahmed", city: "Qena", courseId: "CS-201" },
   102: { id: 102, name: "Mohamed", city: "Cairo", courseId: "AI-305" },
-  103: { id: 103, name: "Abdo", city: "Alexandria", courseId: "BROKEN-COURSE" }, // fails at Level 3
-  104: { id: 104, name: "Saeed", city: "Giza", courseId: "WEB-999" },             // fails at Level 4 (instructor missing)
+  103: { id: 103, name: "Abdo", city: "Alexandria", courseId: "BROKEN-COURSE" },
+  104: { id: 104, name: "Saeed", city: "Giza", courseId: "WEB-999" },
   105: { id: 105, name: "Ayman", city: "Mansoura", courseId: "CS-201" },
   106: { id: 106, name: "Abdelkarim", city: "Aswan", courseId: "AI-305" }
 };
@@ -47,9 +46,7 @@ const getScores = (id) => lookup(SCORES, id, "SCORES", 30);
 const getCourse = (id) => lookup(COURSES, id, "COURSES", 30);
 const getInstructor = (id) => lookup(INSTRUCTORS, id, "INSTRUCTORS", 30);
 
-// ============================================================================
-// buildReport(studentId): Flattened 4-level Promise chain with 1 .catch & 1 .finally
-// ============================================================================
+// buildReport: flat chain with 1 catch and 1 finally
 function buildReport(studentId) {
   const startTime = Date.now();
   let studentData, scoresData, courseData;
@@ -57,23 +54,21 @@ function buildReport(studentId) {
   return getStudent(studentId)
     .then((student) => {
       studentData = student;
-      return getScores(student.id); // Level 2
+      return getScores(student.id);
     })
     .then((scores) => {
       scoresData = scores;
-      return getCourse(studentData.courseId); // Level 3
+      return getCourse(studentData.courseId);
     })
     .then((course) => {
       courseData = course;
-      return getInstructor(course.instructorId); // Level 4
+      return getInstructor(course.instructorId);
     })
     .then((instructor) => {
       const avg = (scoresData.reduce((a, b) => a + b, 0) / scoresData.length).toFixed(1);
-      const summaryLine = `SUCCESS: ${studentData.name} (${studentData.city}) | Avg: ${avg} | Course: ${courseData.title} | Instructor: ${instructor.name} (${instructor.office})`;
-      return summaryLine;
+      return `SUCCESS: ${studentData.name} (${studentData.city}) | Avg: ${avg} | Course: ${courseData.title} | Instructor: ${instructor.name} (${instructor.office})`;
     })
     .catch((err) => {
-      // Exactly ONE .catch handles a failure at ANY level
       return `FAILED: ${err.message}`;
     })
     .finally(() => {
@@ -81,32 +76,23 @@ function buildReport(studentId) {
     });
 }
 
-/*
- * Line-count and Error-handling Comparison:
- * - Day 04 hell.js had FOUR `if (err) return ...` checks (one at every single nested callback).
- * - Day 05 chain.js has ZERO `if (err)` checks and exactly ONE `.catch()` at the end of the chain.
- * - Indentation dropped from 10 spaces (5 levels deep) to 2 spaces flat!
- */
+// Day 04 hell.js had 4 if (err) lines. Day 05 chain.js has only 1 .catch at the end!
 
 async function runDemo() {
   console.log("=== Task 3.3: Flattened Promise Chain Tests ===");
 
-  // 1. Good Chain (Student 101)
   console.log("\n1. Testing Good Chain (101):");
   const res1 = await buildReport(101);
   console.log("Result:", res1);
 
-  // 2. Break #1: Bad Student ID (999) - fails at Level 1
   console.log("\n2. Testing Break #1 - Bad Student (999):");
   const res2 = await buildReport(999);
   console.log("Result:", res2);
 
-  // 3. Break #2: Bad Course ID (Student 103) - fails at Level 3
   console.log("\n3. Testing Break #2 - Bad Course (103):");
   const res3 = await buildReport(103);
   console.log("Result:", res3);
 
-  // 4. Break #3: Bad Instructor ID (Student 104) - fails at Level 4
   console.log("\n4. Testing Break #3 - Bad Instructor (104):");
   const res4 = await buildReport(104);
   console.log("Result:", res4);

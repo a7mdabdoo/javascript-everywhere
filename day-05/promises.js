@@ -1,162 +1,122 @@
-// Day 05 — Task 2: Promise Basics Lab (promises.js)
-
+// Task 2: promises lab
 console.log("=== Task 2.1: Creating Promises ===");
 
-// 1. delay(ms)
-const delay = (ms) =>
-  new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const delayValue = (ms, value) => new Promise((resolve) => setTimeout(() => resolve(value), ms));
+const failAfter = (ms, message) => new Promise((_, reject) => setTimeout(() => reject(new Error(message)), ms));
 
-// 2. delayValue(ms, value)
-const delayValue = (ms, value) =>
-  new Promise((resolve) => {
-    setTimeout(() => resolve(value), ms);
-  });
-
-// 3. failAfter(ms, message) - rejects with a real Error
-const failAfter = (ms, message) =>
-  new Promise((_, reject) => {
-    setTimeout(() => reject(new Error(message)), ms);
-  });
-
-// 4. Log a Promise before it settles and after:
-const pendingP = delayValue(100, "Settled Value: Ahmed");
-console.log("Before settling (synchronous inspection):", pendingP);
+// inspect before and after
+const pendingP = delayValue(100, "Ahmed");
+console.log("Before settling:", pendingP);
 
 pendingP.then((val) => {
-  console.log("After settling:", pendingP, "Resolved with:", val);
+  console.log("After settling:", pendingP, "Value:", val);
   runPart2_2();
 });
 
-// === Task 2.2: Settles Once ===
+// 2.2: settles once
 function runPart2_2() {
   console.log("\n=== Task 2.2: Settles Once ===");
 
-  // Resolve called twice:
   const doubleResolve = new Promise((resolve) => {
-    resolve("First Value (Wins)");
-    resolve("Second Value (Ignored)");
+    resolve("First Value");
+    resolve("Second Value");
   });
-  doubleResolve.then((val) => console.log("doubleResolve settled with:", val));
+  doubleResolve.then((val) => console.log("doubleResolve:", val));
 
-  // Resolve then reject:
   const resolveThenReject = new Promise((resolve, reject) => {
-    resolve("Resolved Successfully");
-    reject(new Error("Late failure"));
+    resolve("Resolved");
+    reject(new Error("Error"));
   });
   resolveThenReject
-    .then((val) => console.log("resolveThenReject settled with:", val))
-    .catch((err) => console.log("Caught unexpected error:", err.message));
+    .then((val) => console.log("resolveThenReject:", val))
+    .catch((err) => console.log("Error:", err.message));
 
-  // Comment on Day 04 callback bug:
-  // In Day 04, a poorly written asynchronous library or bug in if/else could call `callback(null, data)`
-  // and then inadvertently execute another branch calling `callback(err)` or another `callback(...)`.
-  // With Promises, the engine guarantees state transition occurs exactly ONCE (state transitions from
-  // pending to fulfilled or rejected are permanent). Any subsequent resolve or reject calls are no-ops.
+  // In Day 04, a callback could accidentally run twice. Promises guarantee only one settlement.
 
   setTimeout(runPart2_3, 50);
 }
 
-// === Task 2.3: Chaining ===
+// 2.3: chaining
 function runPart2_3() {
   console.log("\n=== Task 2.3: Chaining ===");
 
-  // 1. Four .thens transforming a number:
+  // 4 transformations
   Promise.resolve(10)
-    .then((n) => n + 5)     // 15
-    .then((n) => n * 2)     // 30
-    .then((n) => n - 4)     // 26
-    .then((n) => n / 2)     // 13
-    .then((finalResult) => console.log("Four transformations final result (10 -> 15 -> 30 -> 26 -> 13):", finalResult));
+    .then((n) => n + 5)
+    .then((n) => n * 2)
+    .then((n) => n - 4)
+    .then((n) => n / 2)
+    .then((res) => console.log("Final result:", res));
 
-  // 2. Chain three steps returning delayValue, proving chain waits sequentially:
+  // chained delayValues
   const startTime = Date.now();
-  delayValue(50, "Step 1: Student fetched")
+  delayValue(50, "Step 1")
     .then((step1) => {
       console.log(`[+${Date.now() - startTime}ms] ${step1}`);
-      return delayValue(50, "Step 2: Scores fetched");
+      return delayValue(50, "Step 2");
     })
     .then((step2) => {
       console.log(`[+${Date.now() - startTime}ms] ${step2}`);
-      return delayValue(50, "Step 3: Course fetched");
+      return delayValue(50, "Step 3");
     })
     .then((step3) => {
       console.log(`[+${Date.now() - startTime}ms] ${step3}`);
-      console.log(`Total time for 3 chained delays of 50ms: ~${Date.now() - startTime}ms (Proves sequential waiting)`);
+      console.log(`Total time: ~${Date.now() - startTime}ms`);
     });
 
-  // 3. What happens if return is missing vs present:
-  // With missing return:
-  Promise.resolve("Initial Data")
-    .then((data) => {
-      // Intentionally omitting return:
-      delayValue(50, "New Delayed Data");
+  // missing return
+  Promise.resolve("test")
+    .then(() => {
+      delayValue(50, "missing return");
     })
     .then((received) => {
-      console.log("Missing return demonstration -> Next step received:", received); // undefined!
+      console.log("Without return, next received:", received);
     });
 
-  // 4. Destructuring an object value directly in .then parameter:
-  Promise.resolve({ name: "Ahmed", score: 95, city: "Qena" })
+  // destructure in parameter
+  Promise.resolve({ name: "Ahmed", score: 95 })
     .then(({ name, score }) => {
-      console.log(`Destructured in .then parameter: Student ${name} scored ${score}`);
+      console.log(`Destructured: ${name}, score: ${score}`);
     });
 
   setTimeout(runPart2_4, 250);
 }
 
-// === Task 2.4: Errors & Error Handling ===
+// 2.4: errors
 function runPart2_4() {
   console.log("\n=== Task 2.4: Errors & Error Handling ===");
 
-  // 1. Throw inside .then, caught 3 steps later, skipping steps in between:
+  // throw and catch
   Promise.resolve("Start")
-    .then((v) => {
-      console.log("Step 1: throwing error...");
-      throw new Error("Deliberate failure in Step 1");
+    .then(() => {
+      throw new Error("step 1 error");
     })
-    .then(() => console.log("Step 2: (THIS SHOULD BE SKIPPED)"))
-    .then(() => console.log("Step 3: (THIS SHOULD BE SKIPPED)"))
+    .then(() => console.log("skipped"))
+    .then(() => console.log("skipped"))
     .catch((err) => {
       console.log("Caught after skipped steps:", err.message);
     });
 
-  // 2. A .catch that returns a fallback value, continuing the chain:
-  Promise.reject(new Error("Primary server unreachable"))
+  // catch returning fallback
+  Promise.reject(new Error("failed"))
     .catch((err) => {
-      console.log(`Handling error (${err.message}) -> returning fallback cached profile`);
-      return { id: 101, name: "Ahmed (Offline Cache)", status: "offline" };
+      console.log("Recovering from:", err.message);
+      return { id: 101, name: "Ahmed", fallback: true };
     })
-    .then((profile) => {
-      console.log("Chain continues after catch recovery:", profile);
+    .then((data) => {
+      console.log("Chain continued with fallback:", data);
     });
 
-  // 3. .finally logs "cleanup" on both fulfilled and rejected chains:
-  Promise.resolve("Success data")
-    .finally(() => console.log("[Finally 1]: cleanup on fulfilled chain"))
-    .then((val) => console.log("Consumed after finally:", val));
+  // finally
+  Promise.resolve("done")
+    .finally(() => console.log("[Finally]: cleanup"))
+    .then((v) => console.log("value after finally:", v));
 
-  Promise.reject(new Error("Broken DB connection"))
-    .finally(() => console.log("[Finally 2]: cleanup on rejected chain"))
-    .catch((err) => console.log("Caught rejected chain with finally:", err.message));
+  // reject string vs Error
+  Promise.reject("string error")
+    .catch((err) => console.log("Reject string -> message:", err.message));
 
-  // 4. reject("a string") vs reject(new Error("...")):
-  Promise.reject("Just a raw string error")
-    .catch((err) => {
-      console.log("Rejected with string -> err.message is:", err.message, "| raw err is:", err);
-      // Explanation: String primitives have no `.message` property (returns undefined)
-      // and do not capture a V8 stack trace.
-    });
-
-  Promise.reject(new Error("Real Error Instance"))
-    .catch((err) => {
-      console.log("Rejected with Error instance -> err.message is:", err.message, "| stack exists:", typeof err.stack === "string");
-    });
-
-  // 5. Handled rejection demonstration:
-  failAfter(30, "Testing simulated network failure")
-    .catch((err) => {
-      console.log("Properly caught failure:", err.message);
-    });
+  Promise.reject(new Error("real error"))
+    .catch((err) => console.log("Reject Error -> message:", err.message));
 }
