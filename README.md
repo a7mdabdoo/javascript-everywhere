@@ -28,6 +28,7 @@ Personal tracking repository for the **JavaScript Everywhere** learning path (26
 | **Day 02** | [JS Fundamentals](day-02/NOTES.md) | Variables, data types, conditionals, loops | Complete |
 | **Day 03** | [Functions & Scope](day-03/NOTES.md) | Functions, scope, hoisting, closures, pure grade library | Complete |
 | **Day 04** | [ES6+ & Async JS](day-04/NOTES.md) | Destructuring, spread/rest, timers, error-first callbacks, Event Loop | Complete |
+| **Day 05** | [Promises, Modules & Git](day-05/NOTES.md) | Promises, async/await, ESM vs CJS modules, Git branching & PR workflow | Complete |
 
 ---
 
@@ -70,23 +71,43 @@ javascript-everywhere/
 │   ├── app.js
 │   ├── bonus.js
 │   └── img/
-└── day-04/
+├── day-04/
+│   ├── NOTES.md
+│   ├── predictions.md
+│   ├── predictions.js
+│   ├── destructuring.js
+│   ├── spread.js
+│   ├── messy.js
+│   ├── timers.js
+│   ├── callbacks.js
+│   ├── fake-db.js
+│   ├── hell.js
+│   ├── flat.js
+│   ├── grade-lib.js
+│   ├── students.json
+│   ├── report.js
+│   ├── index.html
+│   ├── app.js
+│   ├── bonus.js
+│   └── img/
+└── day-05/
     ├── NOTES.md
     ├── predictions.md
     ├── predictions.js
-    ├── destructuring.js
-    ├── spread.js
-    ├── messy.js
-    ├── timers.js
-    ├── callbacks.js
-    ├── fake-db.js
-    ├── hell.js
-    ├── flat.js
-    ├── grade-lib.js
-    ├── students.json
-    ├── report.js
-    ├── index.html
-    ├── app.js
-    ├── bonus.js
-    └── img/
+    ├── p11/ … p18/
+    ├── promises.js
+    ├── promisify.js
+    ├── promise-db.js
+    ├── chain.js
+    ├── combinators.js
+    ├── await.js
+    ├── cjs/
+    ├── esm-lab/
+    └── project/
+        ├── package.json
+        ├── students.json
+        ├── report.js
+        ├── index.html
+        ├── main.js
+        └── lib/
 ```
