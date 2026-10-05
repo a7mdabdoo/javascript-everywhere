@@ -1,7 +1,7 @@
 // Day 05 — Task 7.2: project/lib/grade-lib.js
 // Pure grading functions as ES Module named exports — Zero console.log, Zero mutations.
 
-export const PASS_MARK = 60;
+export const PASS_MARK = 65;
 
 export const isValidScore = (score) =>
   typeof score === "number" && !Number.isNaN(score) && score >= 0 && score <= 100;
