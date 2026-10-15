@@ -18,5 +18,10 @@ LINKEDIN_POST*.txt
 *.log
 npm-debug.log*
 
+# Build and data
+dist/
+data/
+
 # IDE settings
 .vscode/
+

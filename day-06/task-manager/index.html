@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager — JavaScript Everywhere</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <h1>Task Manager</h1>
+      <p>Track 1 project · TypeScript, fetch and a real API</p>
+    </header>
+
+    <main class="layout">
+      <section class="panel" aria-labelledby="add-heading">
+        <h2 id="add-heading">New task</h2>
+        <form id="task-form" class="task-form" novalidate>
+          <label for="title">Title</label>
+          <input id="title" name="title" type="text" maxlength="120" autocomplete="off" placeholder="What needs doing?" required />
+
+          <label for="priority">Priority</label>
+          <select id="priority" name="priority">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+
+          <label for="dueDate">Due Date (Optional)</label>
+          <input id="dueDate" name="dueDate" type="date" />
+
+          <button id="add-button" type="submit">Add task</button>
+          <p id="form-error" class="form-error" role="alert"></p>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="tasks-heading">
+        <div class="tasks-head">
+          <h2 id="tasks-heading">Tasks</h2>
+          <p id="counts" class="muted"></p>
+        </div>
+
+        <div class="toolbar">
+          <input id="search" type="search" placeholder="Search tasks…" aria-label="Search tasks" />
+          <div class="filters" role="group" aria-label="Show">
+            <button type="button" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" data-filter="active" aria-pressed="false">Active</button>
+            <button type="button" data-filter="done" aria-pressed="false">Done</button>
+          </div>
+        </div>
+
+        <div class="status-row">
+          <p id="status" class="status" role="status" aria-live="polite"></p>
+          <button id="retry" type="button" hidden>Try again</button>
+        </div>
+
+        <ul id="task-list" class="task-list" aria-label="Task list"></ul>
+
+        <button id="clear-done" type="button" class="quiet">Clear completed</button>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>JavaScript Everywhere · Day 06 · Track 1 project</span>
+      <nav>
+        <a href="/layout-lab.html">About & Layout Lab</a>
+      </nav>
+    </footer>
+
+    <script type="module" src="/dist/client/main.js"></script>
+  </body>
+</html>

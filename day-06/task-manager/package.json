@@ -1,0 +1,16 @@
+{
+  "name": "task-manager",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "api": "node src/server/server.ts",
+    "check": "tsc --noEmit",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "smoke": "node src/scripts/smoke.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2"
+  }
+}
