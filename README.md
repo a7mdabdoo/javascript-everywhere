@@ -29,6 +29,7 @@ Personal tracking repository for the **JavaScript Everywhere** learning path (26
 | **Day 03** | [Functions & Scope](day-03/NOTES.md) | Functions, scope, hoisting, closures, pure grade library | Complete |
 | **Day 04** | [ES6+ & Async JS](day-04/NOTES.md) | Destructuring, spread/rest, timers, error-first callbacks, Event Loop | Complete |
 | **Day 05** | [Promises, Modules & Git](day-05/NOTES.md) | Promises, async/await, ESM vs CJS modules, Git branching & PR workflow | Complete |
+| **Day 06** | [TypeScript, REST APIs & Task Manager](day-06/NOTES.md) | TypeScript, Fetch, REST architecture, CSS Grid/Flexbox, full-stack Task Manager | Complete |
 
 ---
 
@@ -90,24 +91,62 @@ javascript-everywhere/
 │   ├── app.js
 │   ├── bonus.js
 │   └── img/
-└── day-05/
+├── day-05/
+│   ├── NOTES.md
+│   ├── predictions.md
+│   ├── predictions.js
+│   ├── p11/ … p18/
+│   ├── promises.js
+│   ├── promisify.js
+│   ├── promise-db.js
+│   ├── chain.js
+│   ├── combinators.js
+│   ├── await.js
+│   ├── cjs/
+│   ├── esm-lab/
+│   └── project/
+│       ├── package.json
+│       ├── students.json
+│       ├── report.js
+│       ├── index.html
+│       ├── main.js
+│       └── lib/
+└── day-06/
     ├── NOTES.md
+    ├── RETRO.md
+    ├── LINKEDIN_POST.md
+    ├── FEATURE.md
+    ├── BREAK-IT.md
+    ├── BUG-HUNT.md
+    ├── curl.md
     ├── predictions.md
-    ├── predictions.js
-    ├── p11/ … p18/
-    ├── promises.js
-    ├── promisify.js
-    ├── promise-db.js
-    ├── chain.js
-    ├── combinators.js
-    ├── await.js
-    ├── cjs/
-    ├── esm-lab/
-    └── project/
-        ├── package.json
-        ├── students.json
-        ├── report.js
-        ├── index.html
-        ├── main.js
-        └── lib/
+    ├── predictions-api.md
+    ├── predictions/
+    ├── types-lab.ts
+    ├── special-lab.ts
+    ├── functions-lab.ts
+    ├── narrowing-lab.ts
+    ├── db-types.ts
+    ├── typed-db.ts
+    ├── states.ts
+    ├── guards.ts
+    ├── classes-lab.ts
+    ├── generics-lab.ts
+    ├── utilities-lab.ts
+    ├── github-lab.ts
+    ├── crud-lab.ts
+    ├── failures-lab.ts
+    ├── migrate/
+    ├── project/
+    │   ├── src/
+    │   ├── students.json
+    │   ├── index.html
+    │   └── package.json
+    ├── task-manager/
+    │   ├── index.html
+    │   ├── layout-lab.html
+    │   ├── styles.css
+    │   ├── package.json
+    │   └── src/ (client, server, shared, scripts)
+    └── img/
 ```

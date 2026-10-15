@@ -1,0 +1,15 @@
+{
+  "name": "day-06-project",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "report": "node src/report.ts",
+    "check": "tsc --noEmit",
+    "build": "tsc",
+    "start": "node dist/report.js"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2"
+  }
+}
